@@ -15,5 +15,9 @@ pip3 install -r requirements.txt
 
 ### Quick Start
 
-Run `./run.sh`
+```shell
+./run.sh
+```
+
+
 
