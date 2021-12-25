@@ -1,6 +1,11 @@
 ## Web Auto Report
 
-Auto report health in the web.
+Auto report health in the HHU web.
+
+### Environment
+
+* Ubuntu
+* Python3
 
 ### Installation
 

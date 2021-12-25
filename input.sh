@@ -4,7 +4,36 @@ stty erase ^H
 echo '首次运行需要先填写个人表单信息'
 read -p '学号:' user
 
-read -p '密码:' password
+unset PASSWORD
+unset CHARCOUNT
+
+echo -n "密码: "
+stty -echo
+CHARCOUNT=0
+while IFS= read -p "$PROMPT" -r -s -n 1 CHAR
+do
+    # Enter - accept password
+    if [[ $CHAR == $'\0' ]] ; then
+        break
+    fi
+    # Backspace
+    if [[ $CHAR == $'\b' ]] ; then
+        if [ $CHARCOUNT -gt 0 ] ; then
+            CHARCOUNT=$((CHARCOUNT-1))
+            PROMPT=$'\b \b'
+            PASSWORD="${PASSWORD%?}"
+        else
+            PROMPT=''
+        fi
+    else
+        CHARCOUNT=$((CHARCOUNT+1))
+        PROMPT='*'
+        PASSWORD+="$CHAR"
+    fi
+done
+stty echo
+#read -p '密码:' password
+password=$PASSWORD
 
 echo $user > config.txt
 echo $password >> config.txt
@@ -12,6 +41,7 @@ echo $user >> config.txt
 arr=(1 2 3 4 5 6 7 8 9 10 11)
 arr[4]='硕士生'
 arr[6]='非定向'
+echo ''
 read -p '姓名:' arr[0]
 read -p '身份证号:' arr[1]
 read -p '学院:' arr[2]

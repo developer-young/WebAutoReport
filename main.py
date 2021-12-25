@@ -2,6 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 import time
+import os
 
 usrItems = {}
 formItems = {
@@ -63,7 +64,8 @@ def parseHTML(data) -> dict:
     return dic
 
 if __name__ == '__main__':
-    readConfig('./config.txt')
+    root = os.path.dirname(os.path.abspath(__file__))
+    readConfig(root+'/config.txt')
     if len(usrItems) == 0:
         print('信息配置文件错误')
         exit(-1)
